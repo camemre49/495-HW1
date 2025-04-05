@@ -1,20 +1,24 @@
-<p-toolbar [style]="{'background-color': 'var(--background-color)', 'height': '4rem'}">
-  <div class="p-toolbar-group-left">
-    <button pButton label="Home" icon="pi pi-home" class="p-button-text text-color"></button>
-    <button pButton label="Contact" icon="pi pi-phone" class="p-button-text text-color ml-2 "></button>
-  </div>
-  <div class="p-toolbar-group-right">
-    <button pButton icon="pi pi-search" class="p-button-text text-color"></button>
-    <button pButton icon="pi pi-user" class="p-button-text text-color ml-2"></button>
-  </div>
-</p-toolbar>
+<div class="ml-4 mr-4">
+  <p-toolbar [style]="{'background-color': 'var(--accent-color)', 'height': '4rem'}">
+    <div class="p-toolbar-group-left">
+      <button pButton label="Home" icon="pi pi-home" class="p-button-text text-color"></button>
+      <button pButton label="Contact" icon="pi pi-phone" class="p-button-text text-color ml-2 "></button>
+    </div>
+    <div class="p-toolbar-group-right">
+      <button pButton icon="pi pi-search" class="p-button-text text-color"></button>
+      <button pButton icon="pi pi-user" class="p-button-text text-color ml-2"></button>
+    </div>
+  </p-toolbar>
+</div>
 
 <div class="categories-container mt-4">
-  <div class="category" id="vinyls">
-    <h2 class="text-color">Vinyls</h2>
+  <div class="category mt-4 ml-4 mr-4" id="vinyls">
     <div class="category-info grid">
-      <span class="col-4 align-items-center flex">CATEGORY INFO WILL COME HERE</span>
-      <span class="col-8">
+      <span class="col-3">
+        <h2 class="text-color">Vinyls</h2>
+        <div class="align-items-center flex">CATEGORY INFO WILL COME HERE</div>
+      </span>
+      <span class="col-9 align-items-center">
         <p-carousel [value]="vinylsItems" [numVisible]="2" [numScroll]="1" orientation="horizontal" contentClass="flex items-center">
         <ng-template let-item #item>
           <div class="border border-surface-200 dark:border-surface-700 rounded m-2 p-4">
@@ -31,11 +35,13 @@
     </div>
   </div>
 
-  <div class="category" id="antique-furniture">
-    <h2 class="text-color">Antique Furniture</h2>
+  <div class="category mt-4 ml-4 mr-4" id="antique-furniture">
     <div class="category-info grid">
-      <span class="col-4 align-items-center flex">CATEGORY INFO WILL COME HERE</span>
-      <span class="col-8">
+      <span class="col-3">
+        <h2 class="text-color">Antique Furniture</h2>
+        <div class="align-items-center flex">CATEGORY INFO WILL COME HERE</div>
+      </span>
+      <span class="col-9">
         <p-carousel [value]="antiqueFurnitureItems" [numVisible]="2" [numScroll]="1" orientation="horizontal" contentClass="flex items-center">
         <ng-template let-item #item>
           <div class="border border-surface-200 dark:border-surface-700 rounded m-2 p-4">
@@ -52,11 +58,13 @@
     </div>
   </div>
 
-  <div class="category" id="gps-sport-watches">
-    <h2 class="text-color">GPS Sport Watches</h2>
+  <div class="category mt-4 ml-4 mr-4" id="gps-sport-watches">
     <div class="category-info grid">
-      <span class="col-4 align-items-center flex">CATEGORY INFO WILL COME HERE</span>
-      <span class="col-8">
+      <span class="col-3">
+        <h2 class="text-color">GPS Sport Watches</h2>
+        <div class="align-items-center flex">CATEGORY INFO WILL COME HERE</div>
+      </span>
+      <span class="col-9">
         <p-carousel [value]="gpsSportWatchesItems" [numVisible]="2" [numScroll]="1" orientation="horizontal" contentClass="flex items-center">
         <ng-template let-item #item>
           <div class="border border-surface-200 dark:border-surface-700 rounded m-2 p-4">
@@ -73,11 +81,13 @@
     </div>
   </div>
 
-  <div class="category" id="running-shoes">
-    <h2 class="text-color">Running Shoes</h2>
+  <div class="category ml-4 mr-4" id="running-shoes">
     <div class="category-info grid">
-      <span class="col-4 align-items-center flex">CATEGORY INFO WILL COME HERE</span>
-      <span class="col-8">
+      <span class="col-3">
+        <h2 class="text-color">Running Shoes</h2>
+        <div class="align-items-center flex">CATEGORY INFO WILL COME HERE</div>
+      </span>
+      <span class="col-9">
         <p-carousel [value]="runningShoesItems" [numVisible]="2" [numScroll]="1" orientation="horizontal" contentClass="flex items-center">
           <ng-template let-item #item>
             <div class="border border-surface-200 dark:border-surface-700 rounded m-2 p-4">
