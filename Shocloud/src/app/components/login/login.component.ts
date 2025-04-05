@@ -1,4 +1,4 @@
-import {Component, Injector} from '@angular/core';
+import {Component, Injector, OnInit} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -11,6 +11,7 @@ import { DividerModule } from 'primeng/divider';
 import {NgIf} from '@angular/common';
 import {environment} from '../../../environments/environment';
 import {LoginService} from '../../services/login.service';
+import {StyleService} from '../../services/style.service';
 
 @Component({
   selector: 'app-login',
@@ -28,7 +29,7 @@ import {LoginService} from '../../services/login.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   username: string = '';
   password: string = '';
   loading: boolean = false;
@@ -38,9 +39,14 @@ export class LoginComponent {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private injector: Injector
+    private injector: Injector,
+    private styleService: StyleService
   ) {
     this.loginService = injector.get(LoginService)
+  }
+
+  ngOnInit() {
+    this.styleService.setDefault()
   }
 
   login() {

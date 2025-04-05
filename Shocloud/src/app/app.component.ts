@@ -1,22 +1,19 @@
 import {Component} from '@angular/core';
 import {Router, RouterOutlet} from '@angular/router';
-import {NgStyle} from '@angular/common';
+import {NgIf, NgStyle} from '@angular/common';
+import {ImageStyles, StyleService} from './services/style.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NgStyle],
+  imports: [RouterOutlet, NgStyle, NgIf],
   standalone: true,
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent{
-  constructor(private router: Router) {}
+  constructor(private styleService: StyleService) {}
 
-  getImageStyles() {
-    const currentRoute = this.router.url
-    if (currentRoute === '/login') {
-      return { width: '250px', height: '60px' };
-    }
-    return { width: '150px', height: '40px' };
+  get imageStyles(): ImageStyles {
+    return this.styleService.getImageStyles();
   }
 }

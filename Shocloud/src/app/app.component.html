@@ -1,6 +1,7 @@
-<div class="app-title">
-  <hr class="title-divider">
-  <img src="label.png" alt="Shocloud" [ngStyle]="getImageStyles()">
+<div class="app-title" *ngIf="imageStyles.visible">
+  <img src="label.png"
+       alt="Shocloud"
+       [ngStyle]="{width: imageStyles.width, height: imageStyles.height}">
   <hr class="title-divider">
 </div>
 <div>

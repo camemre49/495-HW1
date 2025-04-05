@@ -6,10 +6,10 @@ import {environment} from "../../environments/environment";
   providedIn: 'root'
 })
 
-export class ApiService {
-  private API_URL = environment.apiUrl;
+export class BaseService {
+  protected API_URL = environment.apiUrl;
 
-  constructor(private http: HttpClient) {
+  constructor(protected http: HttpClient) {1
   }
 
 }
