@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Injector} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -10,6 +10,7 @@ import { PasswordModule } from 'primeng/password';
 import { DividerModule } from 'primeng/divider';
 import {NgIf} from '@angular/common';
 import {environment} from '../../../environments/environment';
+import {LoginService} from '../../services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -32,11 +33,15 @@ export class LoginComponent {
   password: string = '';
   loading: boolean = false;
   errorMessage: string | null = null;
+  loginService: LoginService;
 
   constructor(
     private http: HttpClient,
-    private router: Router
-  ) {}
+    private router: Router,
+    private injector: Injector
+  ) {
+    this.loginService = injector.get(LoginService)
+  }
 
   login() {
     if (!this.username || !this.password) {
@@ -47,10 +52,7 @@ export class LoginComponent {
     this.loading = true;
     this.errorMessage = null;
 
-    this.http.post('http://localhost:3000/login', {
-      username: this.username,
-      password: this.password
-    }).subscribe({
+    this.loginService.getItems(this.username, this.password).subscribe({
       next: (res: any) => {
         this.loading = false;
         this.router.navigate(['/home']); // Redirect after login

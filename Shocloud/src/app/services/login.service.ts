@@ -6,10 +6,16 @@ import {environment} from "../../environments/environment";
   providedIn: 'root'
 })
 
-export class ApiService {
+export class LoginService {
   private API_URL = environment.apiUrl;
 
   constructor(private http: HttpClient) {
   }
 
+  getItems(username: string, password: string) {
+    return this.http.post(`${this.API_URL}/login`, {
+      username: username,
+      password: password
+    });
+  }
 }
