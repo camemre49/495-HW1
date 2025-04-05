@@ -1,15 +1,15 @@
 import {Component, Injector, OnInit} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import {ApiService} from "./services/api.service";
+import {ApiService} from './services/api.service';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   imports: [RouterOutlet],
+  standalone: true,
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit{
   title = 'Shocloud';
   apiService: ApiService
 
