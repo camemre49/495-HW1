@@ -1,33 +1,28 @@
-const express = require('express');
-const cors = require('cors');
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import connectDB from './config/mongo.js';
+import authRoutes from './routes/userRoutes.js';
+import { errorHandler } from './middlewares/errorHandler.js';
+
+dotenv.config();
+
 const app = express();
 
 // Middleware
-app.use(cors()); // Allow Angular frontend to communicate
-app.use(express.json()); // Parse JSON requests
+app.use(cors());
+app.use(express.json());
 
-// Test route
-app.get('/test', (req, res) => {
-  res.json({ message: "Hello from Express backend!" });
-});
+// Database Connection
+connectDB();
 
-app.post('/login', (req, res) => {
-  const { username, password } = req.body;
-  const user = users.find(u => u.username === username && u.password === password);
+// Routes
+app.use('/', authRoutes);  // Changed to /api for better route organization
 
-  if (user) {
-    res.json({ success: true, role: user.role });
-  } else {
-    res.status(401).json({ success: false, message: 'Invalid credentials' });
-  }
-});
+// Error Handling
+app.use(errorHandler);
 
-app.get('/users', (req, res) => {
-  res.send("admin");
-});
-
-// Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Backend running on http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });

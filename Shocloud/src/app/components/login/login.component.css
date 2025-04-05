@@ -7,8 +7,16 @@
 }
 
 .login-card {
-  width: 100%;
-  max-width: 30vw;
+  width: 90%;
+  max-width: 500px;  /* Limit on large screens */
+  min-width: 300px;  /* Avoid too narrow on small screens */
+  margin: 0 auto;     /* Center horizontally */
+}
+
+@media (max-width: 600px) {
+  .login-card {
+    max-width: 95%;  /* Let it use more space on phones */
+  }
 }
 
 .login-header {
