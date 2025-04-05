@@ -1,0 +1,57 @@
+<div class="login-container background-color">
+  <div class="login-card">
+    <p-card>
+      <div class="login-header text-color">
+        <h1 class="text-color">Welcome</h1>
+      </div>
+
+      <form (ngSubmit)="login()" class="login-form">
+        <div class="input-field">
+          <div class="text-color" for="username">Username</div>
+          <input
+            id="username"
+            type="text"
+            pInputText
+            [(ngModel)]="username"
+            name="username"
+            placeholder="Enter your username"
+            [disabled]="loading"
+          >
+        </div>
+
+        <div class="input-field">
+          <div class="text-color" for="password">Password</div>
+          <p-password
+            class="flex flex-column"
+            id="password"
+            [(ngModel)]="password"
+            name="password"
+            [feedback]="false"
+            placeholder="Enter your password"
+            [disabled]="loading"
+            [toggleMask]="true"
+            inputStyleClass="w-full"
+          ></p-password>
+        </div>
+
+        <p-button
+          type="submit"
+          label="Login"
+          class="flex justify-content-center"
+          styleClass="w-7rem"
+          [loading]="loading"
+          [disabled]="!username || !password"
+        ></p-button>
+
+        <p-divider></p-divider>
+
+        <p-message
+          *ngIf="errorMessage"
+          severity="error"
+          [text]="errorMessage"
+          styleClass="w-full"
+        ></p-message>
+      </form>
+    </p-card>
+  </div>
+</div>

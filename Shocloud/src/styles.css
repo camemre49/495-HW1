@@ -1,1 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'primeflex/primeflex.scss';
+
+.background-color {
+  background-color: #5b574f;
+}
+
+.text-color {
+  color: #eceae5;
+}
+
+:root {
+  --primary-color: #d2c5aa;
+  --secondary-color: #735e34;
+  --accent-color: #c2a15e;
+  --text-color: #eceae5;
+  --background-color: #5b574f;
+  --button-text-color: #000000
+}

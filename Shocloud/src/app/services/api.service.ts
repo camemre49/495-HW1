@@ -14,6 +14,6 @@ export class ApiService {
 
   getItems() {
     console.log(this.API_URL)
-    return this.http.get(`${this.API_URL}/api/test`);
+    return this.http.get(`${this.API_URL}/test`);
   }
 }

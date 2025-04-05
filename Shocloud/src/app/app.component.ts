@@ -9,20 +9,6 @@ import {ApiService} from './services/api.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit{
+export class AppComponent{
   title = 'Shocloud';
-  apiService: ApiService
-
-
-  constructor(private injector: Injector) {
-    this.apiService = injector.get(ApiService)
-  }
-
-
-  ngOnInit() {
-    console.log(this.title)
-    this.apiService.getItems().subscribe(message => {
-      console.log(message)
-    })
-  }
 }
