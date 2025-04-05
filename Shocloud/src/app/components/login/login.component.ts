@@ -9,6 +9,7 @@ import { MessageModule } from 'primeng/message';
 import { PasswordModule } from 'primeng/password';
 import { DividerModule } from 'primeng/divider';
 import {NgIf} from '@angular/common';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
