@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, Injector, OnInit} from '@angular/core';
 import {StyleService} from '../../services/style.service';
 import {Toolbar} from 'primeng/toolbar';
 import {Button, ButtonDirective, ButtonIcon} from 'primeng/button';
@@ -7,6 +7,9 @@ import {Card} from 'primeng/card';
 import {NgForOf} from '@angular/common';
 import {Tag} from 'primeng/tag';
 import {CategorySectionComponent} from './category-section/category-section.component';
+import {HttpClient} from '@angular/common/http';
+import {Router} from '@angular/router';
+import {LoginService} from '../../services/login.service';
 
 @Component({
   selector: 'app-home',
@@ -24,6 +27,11 @@ import {CategorySectionComponent} from './category-section/category-section.comp
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
+  constructor(
+    private router: Router,
+    private styleService: StyleService
+  ) {}
+
   vinylsItems = [
     { name: 'Vinyl Record 1', imageUrl: 'label.png', rating: 3 },
     { name: 'Vinyl Record 2', imageUrl: 'label.png', rating: 4},
@@ -61,13 +69,15 @@ export class HomeComponent implements OnInit {
     // Add more items
   ];
 
-  constructor(private styleService: StyleService) {
-  }
   ngOnInit() {
     setTimeout(() => {
       this.styleService.labelWidth = "125px";
       this.styleService.labelHeight = "30px";
     })
+  }
+
+  navigateToUserPanel() {
+    this.router.navigate(['/profile']);
   }
 
 }

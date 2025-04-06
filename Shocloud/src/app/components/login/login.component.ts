@@ -58,10 +58,11 @@ export class LoginComponent implements OnInit{
     this.loading = true;
     this.errorMessage = null;
 
-    this.loginService.getItems(this.username, this.password).subscribe({
+    this.loginService.login(this.username, this.password).subscribe({
       next: (res: any) => {
         this.loading = false;
         this.router.navigate(['/home']); // Redirect after login
+        this.loginService.updateLoggedInUser(res.user)
       },
       error: (err) => {
         this.loading = false;

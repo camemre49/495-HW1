@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
         enum: ['user', 'admin'],
         default: 'user'
     },
-    ratingsGiven: [{
+    ratingsAndReviews: [{
         itemId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Item'
@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
         rating: {
             type: Number,
             min: 1,
-            max: 10
+            max: 5
         },
         review: String,
         createdAt: {

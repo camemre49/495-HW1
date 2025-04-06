@@ -1,0 +1,22 @@
+/* Custom table styles */
+.custom-table .p-table-header {
+  background-color: #2c3e50; /* Dark background color for header */
+  color: #ecf0f1; /* Light text color for header */
+}
+
+.custom-table .p-table-tbody > tr {
+  background-color: #34495e; /* Dark background for body rows */
+  color: #ecf0f1; /* Light text color for body */
+}
+
+.custom-table .p-table-tbody > tr:hover {
+  background-color: #1abc9c; /* Highlight color on row hover */
+}
+
+.custom-table .p-table th {
+  font-weight: bold;
+}
+
+.custom-table .p-rating {
+  color: #f39c12; /* Set the rating stars color */
+}
