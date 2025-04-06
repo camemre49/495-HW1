@@ -1,7 +1,7 @@
 <div class="category mt-4 ml-4 mr-4" [id]="carouselId">
   <div class="category-info grid">
     <span class="col-3">
-      <h2 class="text-color">{{ title }}</h2>
+      <h2 class="text-color cursor-pointer" (click)="goToCategory()">{{ title }}</h2>
       <h3 class="align-items-center flex text-800 font-light">{{ description }}</h3>
     </span>
     <span class="col-9 align-items-center">
@@ -13,11 +13,13 @@
                 <img [src]="item.imageUrl" [alt]="item.name" class="w-full rounded" />
               </div>
             </div>
-            <h3 class="text-color">{{ item.name }}</h3>
             <div class="flex justify-content-between">
-                <span class="mt-0 font-semibold text-xl">{{ '$' + 20 }}</span>
-                <span class="flex">
-                    <span class="align-items-center flex mr-2" [pTooltip]="item.rating" tooltipPosition="top">
+              <h3 class="text-color">{{ item.name }}</h3>
+              <h3 class="text-color>">{{'$' + 20 + '    ‎' }}</h3>
+            </div>
+            <div class="flex">
+                <span class="flex justify-content-between">
+                    <span class="align-items-center flex mr-3" [pTooltip]="item.rating" tooltipPosition="top">
                       <p-rating
                         [(ngModel)]="item.rating"
                         [stars]="10"

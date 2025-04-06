@@ -1,0 +1,76 @@
+<div class="ml-4 mr-4">
+  <p-toolbar [style]="{'background-color': 'var(--accent-color)', 'height': '4rem'}">
+    <div class="p-toolbar-group-left">
+      <button pButton label="Home" icon="pi pi-home" (click)="navigateToHomePanel()" class="p-button-text text-color"></button>
+      <button pButton label="Contact" icon="pi pi-phone" class="p-button-text text-color ml-2 "></button>
+    </div>
+    <div class="p-toolbar-group-right">
+      <button pButton icon="pi pi-search" class="p-button-text text-color"></button>
+      <button pButton icon="pi pi-user" (click)="navigateToUserPanel()" class="p-button-text text-color ml-2"></button>
+    </div>
+  </p-toolbar>
+</div>
+
+<div class="categories-container">
+  <div class="category ml-4 mt-4 mr-4">
+    <div *ngIf="item" class="item-details-card">
+      <div class="item-header flex justify-content-between">
+        <div class="flex align-items-center gap-4">
+          <h2 class="item-title">{{ item.name }}</h2>
+          <!-- Remove Item Button for Admins -->
+          <div *ngIf="true" class="remove-item-btn-container">
+            <button pButton label="Remove Item" icon="pi pi-trash" class="p-button-danger" (click)="removeItem()"></button>
+          </div>
+        </div>
+        <h2 class="item-price">${{ item.price }}</h2>
+      </div>
+
+      <div class="item-image">
+        <img [src]="'label.png'" alt="{{ item.name }}" class="img-fluid" />
+      </div>
+
+      <div class="item-description">
+        <h3>{{ item.description }}</h3>
+      </div>
+
+      <div class="item-meta">
+        <h3><strong>Seller:</strong> {{ item.seller }}</h3>
+        <h3><strong>Average Rating:</strong> {{ item.rating }} / 10</h3>
+
+        <div *ngIf="item.batteryLife">
+          <h3><strong>Battery Life:</strong> {{ item.batteryLife }} hours</h3>
+        </div>
+        <div *ngIf="item.age">
+          <h3><strong>Age:</strong> {{ item.age }} years</h3>
+        </div>
+        <div *ngIf="item.size">
+          <h3><strong>Size:</strong> {{ item.size }}</h3>
+        </div>
+        <div *ngIf="item.material">
+          <h3><strong>Material:</strong> {{ item.material }}</h3>
+        </div>
+      </div>
+
+      <p-table *ngIf="item.itemRatingsAndReviews?.length; else noReviews" [value]="item.itemRatingsAndReviews">
+        <ng-template pTemplate="header">
+          <tr>
+            <th [style]="{'background-color': 'var(--background-color)', 'border-color': 'var(--accent-color)'}">User</th>
+            <th [style]="{'background-color': 'var(--background-color)', 'border-color': 'var(--accent-color)'}">Rating</th>
+            <th [style]="{'background-color': 'var(--background-color)', 'border-color': 'var(--accent-color)'}">Review</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-review>
+          <tr>
+            <td [style]="{'background-color': 'var(--background-color)', 'border-color': 'var(--accent-color)'}">{{ review.username }}</td>
+            <td [style]="{'background-color': 'var(--background-color)', 'border-color': 'var(--accent-color)'}"><p-rating [ngModel]="review.rating" [readonly]="true" [stars]="10"></p-rating></td>
+            <td [style]="{'background-color': 'var(--background-color)', 'border-color': 'var(--accent-color)'}">{{ review.review }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+      <ng-template #noReviews><p>You haven't written any reviews yet.</p></ng-template>
+    </div>
+  </div>
+</div>
+

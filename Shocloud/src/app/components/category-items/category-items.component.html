@@ -1,0 +1,46 @@
+<div class="ml-4 mr-4">
+  <p-toolbar [style]="{'background-color': 'var(--accent-color)', 'height': '4rem'}">
+    <div class="p-toolbar-group-left">
+      <button pButton label="Home" icon="pi pi-home" (click)="navigateToHomePanel()" class="p-button-text text-color"></button>
+      <button pButton label="Contact" icon="pi pi-phone" class="p-button-text text-color ml-2 "></button>
+    </div>
+    <div class="p-toolbar-group-right">
+      <button pButton icon="pi pi-search" class="p-button-text text-color"></button>
+      <button pButton icon="pi pi-user" (click)="navigateToUserPanel()" class="p-button-text text-color ml-2"></button>
+    </div>
+  </p-toolbar>
+</div>
+
+<div class="m-4 category">
+  <div class="flex justify-content-between align-items-center">
+    <h2 class="text-3xl mb-3 text-color">{{ categoryTitle }}</h2>
+
+    <span class="align-items-center">
+      <button pButton icon="pi pi-plus" label="Add Item"  (click)="addItem()"></button>
+    </span>
+  </div>
+
+  <div class="grid grid-nogutter md:grid-cols-3 gap-4">
+    <ng-container *ngFor="let item of items">
+      <p-card class="shadow-2" (click)="goToItemDetails(item.id)" [style]="{cursor:'pointer'}">
+        <ng-template pTemplate="header">
+          <div class="relative mx-auto">
+            <img [src]="'label.png'" [alt]="item.name" width="84" height="84" class="w-full rounded" />
+          </div>
+        </ng-template>
+
+        <div class="flex justify-content-between items-center mb-2">
+          <h3 class="text-color m-0">{{ item.name }}</h3>
+          <span class="text-lg font-semibold">${{ item.price ?? 0 + ' ‎' }}</span>
+        </div>
+
+        <div class="flex align-items-center justify-content-between mt-2">
+          <p-rating [(ngModel)]="item.rating" [readonly]="true" [stars]="10"></p-rating>
+          <button pButton icon="pi pi-star"
+                  [severity]="'secondary'"
+                  [outlined]="true" (click)="rateItem(item)"></button>
+        </div>
+      </p-card>
+    </ng-container>
+  </div>
+</div>
