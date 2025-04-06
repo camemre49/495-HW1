@@ -5,6 +5,7 @@ import {ProfileComponent} from './components/profile/profile.component';
 import {AuthGuard} from './guards/auth.guard';
 import {CategoryItemsComponent} from './components/category-items/category-items.component';
 import {ItemDetailsComponent} from './components/item-details/item-details.component';
+import {AddItemComponent} from './components/item-details/add-item/add-item.component';
 
 export const routes: Routes = [
   {
@@ -28,6 +29,11 @@ export const routes: Routes = [
   },
   { path: 'home/:categoryName',
     component: CategoryItemsComponent,
+    // canActivate: [AuthGuard]
+  },
+  {
+    path: 'home/:categoryName/addItem',
+    component: AddItemComponent,
     // canActivate: [AuthGuard]
   },
   {

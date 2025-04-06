@@ -16,28 +16,28 @@
     [carouselId]="'vinyls'"
     [title]="'Vinyls'"
     [description]="'Experience music the way it was meant to be heard — raw, rich, and timeless. Our vinyl collection brings classic and modern albums together for true audiophiles.'"
-    [items]="vinylsItems"
+    [items]="itemService.vinylsItems"
   ></app-category-section>
 
   <app-category-section
     [carouselId]="'antique-furniture'"
-    [title]="'Antique Furniture'"
+    [title]="'Antique Furnitures'"
     [description]="'Bring history into your home with stunning antique pieces that tell a story. Crafted with character and charm, these treasures elevate any space.'"
-    [items]="antiqueFurnitureItems"
+    [items]="itemService.antiqueFurnitureItems"
   ></app-category-section>
 
   <app-category-section
     [carouselId]="'gps-sport-watches'"
     [title]="'GPS Sport Watches'"
     [description]="'Stay ahead of the game with cutting-edge GPS sport watches that track your every move. Perfect for athletes and adventurers who demand precision and style.'"
-    [items]="gpsSportWatchesItems"
+    [items]="itemService.gpsSportWatchesItems"
   ></app-category-section>
 
   <app-category-section
     [carouselId]="'running-shoes'"
     [title]="'Running Shoes'"
     [description]="'Push your limits with running shoes built for performance and comfort. Whether you’re chasing a personal best or hitting the pavement for fun, your perfect pair awaits.'"
-    [items]="runningShoesItems"
+    [items]="itemService.runningShoesItems"
   ></app-category-section>
 </div>
 

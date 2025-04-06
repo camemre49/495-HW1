@@ -64,4 +64,8 @@ export class LoginService extends BaseService {
   getUser(): any {
     return this.loggedInUser;
   }
+
+  getLoggedInUser() {
+    return this.loggedInUser
+  }
 }

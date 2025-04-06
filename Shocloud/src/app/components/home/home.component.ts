@@ -1,15 +1,13 @@
-import {AfterViewInit, ChangeDetectorRef, Component, Injector, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {StyleService} from '../../services/style.service';
 import {Toolbar} from 'primeng/toolbar';
-import {Button, ButtonDirective, ButtonIcon} from 'primeng/button';
+import {Button, ButtonDirective} from 'primeng/button';
 import {Carousel} from 'primeng/carousel';
 import {Card} from 'primeng/card';
 import {NgForOf} from '@angular/common';
-import {Tag} from 'primeng/tag';
 import {CategorySectionComponent} from './category-section/category-section.component';
-import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {LoginService} from '../../services/login.service';
+import {ItemService} from '../../services/item.service';
 
 @Component({
   selector: 'app-home',
@@ -29,55 +27,24 @@ import {LoginService} from '../../services/login.service';
 export class HomeComponent implements OnInit {
   constructor(
     private router: Router,
-    private styleService: StyleService
+    private styleService: StyleService,
+    public itemService: ItemService
   ) {}
-
-  vinylsItems = [
-    { name: 'Vinyl Record 1', imageUrl: 'label.png', rating: 3 },
-    { name: 'Vinyl Record 2', imageUrl: 'label.png', rating: 4},
-    { name: 'Vinyl Record 3', imageUrl: 'label.png', rating: 3.7},
-    { name: 'Vinyl Record 4', imageUrl: 'label.png' },
-    { name: 'Vinyl Record 5', imageUrl: 'label.png' },
-    // Add more items
-  ];
-
-  antiqueFurnitureItems = [
-    { name: 'Antique Chair', imageUrl: 'label.png' },
-    { name: 'Antique Table', imageUrl: 'label.png' },
-    { name: 'Antique Table 2', imageUrl: 'label.png' },
-    { name: 'Antique Table 3', imageUrl: 'label.png' },
-    { name: 'Antique Table 4', imageUrl: 'label.png' }
-
-    // Add more items
-  ];
-
-  gpsSportWatchesItems = [
-    { name: 'GPS Watch 1', imageUrl: 'label.png' },
-    { name: 'GPS Watch 2', imageUrl: 'label.png' },
-    { name: 'GPS Watch 3', imageUrl: 'label.png' },
-    { name: 'GPS Watch 4', imageUrl: 'label.png' },
-    { name: 'GPS Watch 5', imageUrl: 'label.png' },
-    // Add more items
-  ];
-
-  runningShoesItems = [
-    { name: 'Running Shoe 1', imageUrl: 'label.png' },
-    { name: 'Running Shoe 2', imageUrl: 'label.png' },
-    { name: 'Running Shoe 3', imageUrl: 'label.png' },
-    { name: 'Running Shoe 4', imageUrl: 'label.png' },
-    { name: 'Running Shoe 5', imageUrl: 'label.png' }
-    // Add more items
-  ];
 
   ngOnInit() {
     setTimeout(() => {
       this.styleService.labelWidth = "125px";
       this.styleService.labelHeight = "30px";
     })
+
+    // Fetch random items for each category
+    this.itemService.fetchRandomItems('vinyls');
+    this.itemService.fetchRandomItems('antique-furniture');
+    this.itemService.fetchRandomItems('gps-sport-watches');
+    this.itemService.fetchRandomItems('running-shoes');
   }
 
   navigateToUserPanel() {
     this.router.navigate(['/profile']);
   }
-
 }

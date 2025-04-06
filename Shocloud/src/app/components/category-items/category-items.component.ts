@@ -205,7 +205,10 @@ export class CategoryItemsComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       const categoryName = params.get('categoryName');
       if (categoryName) {
-        this.categoryTitle = categoryName;
+        this.categoryTitle =
+          categoryName.split(' ') // Split title into words
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize each word
+          .join(' '); // Join words back into a single string;
         this.fetchItems(categoryName);
       }
     });
@@ -239,14 +242,10 @@ export class CategoryItemsComponent implements OnInit {
   }
 
   goToItemDetails(itemId: string): void {
-    this.router.navigate([`/home/${this.categoryTitle}/${itemId}`]);
+    this.router.navigate([`/home/${this.categoryTitle.toLowerCase()}/${itemId}`]);
   }
 
-  addItem() {
-
-  }
-
-  removeItem() {
-
+  navigateToAddItemComponent() {
+    this.router.navigate([`/home/${this.categoryTitle.toLowerCase()}/addItem`])
   }
 }

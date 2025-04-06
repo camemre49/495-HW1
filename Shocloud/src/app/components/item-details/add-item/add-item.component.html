@@ -1,0 +1,77 @@
+<div class="ml-4 mr-4">
+  <p-toolbar [style]="{'background-color': 'var(--accent-color)', 'height': '4rem'}">
+    <div class="p-toolbar-group-left">
+      <button pButton label="Home" icon="pi pi-home" (click)="navigateToHomePanel()" class="p-button-text text-color"></button>
+      <button pButton label="Contact" icon="pi pi-phone" class="p-button-text text-color ml-2 "></button>
+    </div>
+    <div class="p-toolbar-group-right">
+      <button pButton icon="pi pi-search" class="p-button-text text-color"></button>
+      <button pButton icon="pi pi-user" (click)="navigateToUserPanel()" class="p-button-text text-color ml-2"></button>
+    </div>
+  </p-toolbar>
+</div>
+
+<div class="categories-container w-full">
+  <div class="category ml-4 mt-4 mr-4">
+    <div class="flex grid w-full">
+      <h2 class="col-12">Add New {{ categoryName }}</h2>
+      <form (ngSubmit)="submitNewItem()" class="col-12">
+        <div class="p-field col-12 w-full flex">
+          <label class="col-3" for="name">Item Name</label>
+          <input class="col-9" id="name" [(ngModel)]="newItem.name" name="name" type="text" pInputText required />
+        </div>
+
+        <div class="p-field col-12 w-full align-items-start flex">
+          <label class="col-3 align-items-start" for="description">Description</label>
+          <textarea class="col-9" id="description" [(ngModel)]="newItem.description" name="description" pInputTextarea rows="4" cols="30"></textarea>
+        </div>
+
+        <div class="p-field col-12 flex w-full">
+          <label class="col-3" for="price">Price</label>
+          <input class="col-9" id="price" [(ngModel)]="newItem.price" name="price" type="number" pInputText required />
+        </div>
+
+        <div class="p-field col-12 flex w-full">
+          <label class="col-3" for="image">Item Image (URL)</label>
+          <input class="col-9" id="image" type="text" [(ngModel)]="newItem.image" name="image" pInputText required />
+        </div>
+
+        <!-- Image Preview Section -->
+        <div *ngIf="newItem.image" class="mb-4 col-offset-3 col-2">
+          <div class="relative mx-auto">
+            <img [src]="newItem.image" [alt]="newItem.name" class="w-full rounded" height="150" />
+          </div>
+        </div>
+
+        <div class="p-field col-12 flex w-full ">
+          <label class="col-3" for="seller">Seller</label>
+          <input class="col-9" id="seller" [(ngModel)]="newItem.seller" name="seller" type="text" pInputText required />
+        </div>
+
+        <div *ngIf="categoryName.toLowerCase() === 'Gps sport watch'.toLowerCase()" class="p-field col-12 flex w-full">
+          <label class="col-3" for="batteryLife">Battery Life</label>
+          <input class="col-9" id="batteryLife" [(ngModel)]="newItem.batteryLife" name="batteryLife" type="number" pInputText />
+        </div>
+
+        <div *ngIf="categoryName.toLowerCase() === 'Antique furniture'.toLowerCase() || categoryName.toLowerCase() === 'Vinyl'.toLowerCase()" class="p-field col-12 flex w-full">
+          <label class="col-3" for="age">Age</label>
+          <input class="col-9" id="age" [(ngModel)]="newItem.age" name="age" type="number" pInputText />
+        </div>
+
+        <div *ngIf="categoryName.toLowerCase() === 'Running shoe'.toLowerCase()" class="p-field col-12 flex w-full">
+          <label class="col-3" for="size">Size</label>
+          <input class="col-9" id="size" [(ngModel)]="newItem.size" name="size" type="text" pInputText />
+        </div>
+
+        <div *ngIf="categoryName.toLowerCase() === 'Antique furniture'.toLowerCase() || categoryName.toLowerCase() === 'Running shoes'.toLowerCase()" class="p-field col-12 flex w-full">
+          <label class="col-3" for="material">Material</label>
+          <input class="col-9" id="material" [(ngModel)]="newItem.material" name="material" type="text" pInputText />
+        </div>
+
+        <div class="col-12 flex justify-content-end">
+          <button pButton label="Add Item" icon="pi pi-plus" class="p-button-success" type="submit"></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
