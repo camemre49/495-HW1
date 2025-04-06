@@ -6,6 +6,7 @@ import {Carousel} from 'primeng/carousel';
 import {Card} from 'primeng/card';
 import {NgForOf} from '@angular/common';
 import {Tag} from 'primeng/tag';
+import {CategorySectionComponent} from './category-section/category-section.component';
 
 @Component({
   selector: 'app-home',
@@ -17,15 +18,16 @@ import {Tag} from 'primeng/tag';
     Carousel,
     Card,
     NgForOf,
-    Button
+    Button,
+    CategorySectionComponent
   ],
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
   vinylsItems = [
-    { name: 'Vinyl Record 1', imageUrl: 'label.png' },
-    { name: 'Vinyl Record 2', imageUrl: 'label.png' },
-    { name: 'Vinyl Record 3', imageUrl: 'label.png' },
+    { name: 'Vinyl Record 1', imageUrl: 'label.png', rating: 3 },
+    { name: 'Vinyl Record 2', imageUrl: 'label.png', rating: 4},
+    { name: 'Vinyl Record 3', imageUrl: 'label.png', rating: 3.7},
     { name: 'Vinyl Record 4', imageUrl: 'label.png' },
     { name: 'Vinyl Record 5', imageUrl: 'label.png' },
     // Add more items

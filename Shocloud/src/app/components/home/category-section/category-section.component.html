@@ -1,0 +1,49 @@
+<div class="category mt-4 ml-4 mr-4" [id]="carouselId">
+  <div class="category-info grid">
+    <span class="col-3">
+      <h2 class="text-color">{{ title }}</h2>
+      <h3 class="align-items-center flex text-800 font-light">{{ description }}</h3>
+    </span>
+    <span class="col-9 align-items-center">
+      <p-carousel [value]="items" [numVisible]="2" [numScroll]="1" orientation="horizontal" contentClass="flex items-center" >
+        <ng-template let-item #item>
+          <div class="item-info m-2 p-3">
+            <div class="mb-4">
+              <div class="relative mx-auto">
+                <img [src]="item.imageUrl" [alt]="item.name" class="w-full rounded" />
+              </div>
+            </div>
+            <h3 class="text-color">{{ item.name }}</h3>
+            <div class="flex justify-content-between">
+                <span class="mt-0 font-semibold text-xl">{{ '$' + 20 }}</span>
+                <span class="flex">
+                    <span class="align-items-center flex mr-2" [pTooltip]="item.rating" tooltipPosition="top">
+                      <p-rating
+                        [(ngModel)]="item.rating"
+                        [readonly]="true"
+                        [iconOnStyle]="{'cursor': 'default'}"
+                        [iconOffStyle]="{'cursor': 'default'}"
+                      ></p-rating>
+                    </span>
+                    <p-button
+                      icon="pi pi-star"
+                      pTooltip="Rate the product"
+                      tooltipPosition="top"
+                      [severity]="'secondary'"
+                      [outlined]="true"
+                      (click)="ratingPanel.toggle($event); toggleRatingPanel(item)"
+                    />
+                </span>
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </span>
+  </div>
+</div>
+
+<p-popover #ratingPanel [dismissable]="true">
+  <div>
+    <p-rating [(ngModel)]="selectedItem.rating" (onRate)="submitRating()"></p-rating>
+  </div>
+</p-popover>

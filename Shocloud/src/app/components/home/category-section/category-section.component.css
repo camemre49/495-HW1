@@ -1,0 +1,42 @@
+.categories-container {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.category {
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #3f3f46; /* Add border to each category */
+  background-color: var(--accent-color);
+}
+
+.category h2 {
+  margin-top: 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.category-info {
+  margin-top: 10px;
+}
+
+.item-info {
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #3f3f46; /* Add border to each category */
+}
+
+::ng-deep .p-carousel-next-button svg {
+  color: var(--text-color);
+}
+::ng-deep .p-carousel-prev-button svg {
+  color: var(--text-color);
+}
+
+::ng-deep .p-carousel {
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: var(--background-color);
+}

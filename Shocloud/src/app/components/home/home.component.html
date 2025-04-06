@@ -12,96 +12,33 @@
 </div>
 
 <div class="categories-container mt-4">
-  <div class="category mt-4 ml-4 mr-4" id="vinyls">
-    <div class="category-info grid">
-      <span class="col-3">
-        <h2 class="text-color">Vinyls</h2>
-        <div class="align-items-center flex">CATEGORY INFO WILL COME HERE</div>
-      </span>
-      <span class="col-9 align-items-center">
-        <p-carousel [value]="vinylsItems" [numVisible]="2" [numScroll]="1" orientation="horizontal" contentClass="flex items-center">
-        <ng-template let-item #item>
-          <div class="border border-surface-200 dark:border-surface-700 rounded m-2 p-4">
-            <div class="mb-4">
-              <div class="relative mx-auto">
-                <img [src]="item.imageUrl" [alt]="item.name" class="w-full rounded" />
-              </div>
-            </div>
-            <div class="mb-4 font-medium">{{ item.name }}</div>
-          </div>
-        </ng-template>
-      </p-carousel>
-      </span>
-    </div>
-  </div>
+  <app-category-section
+    [carouselId]="'vinyls'"
+    [title]="'Vinyls'"
+    [description]="'Experience music the way it was meant to be heard — raw, rich, and timeless. Our vinyl collection brings classic and modern albums together for true audiophiles.'"
+    [items]="vinylsItems"
+  ></app-category-section>
 
-  <div class="category mt-4 ml-4 mr-4" id="antique-furniture">
-    <div class="category-info grid">
-      <span class="col-3">
-        <h2 class="text-color">Antique Furniture</h2>
-        <div class="align-items-center flex">CATEGORY INFO WILL COME HERE</div>
-      </span>
-      <span class="col-9">
-        <p-carousel [value]="antiqueFurnitureItems" [numVisible]="2" [numScroll]="1" orientation="horizontal" contentClass="flex items-center">
-        <ng-template let-item #item>
-          <div class="border border-surface-200 dark:border-surface-700 rounded m-2 p-4">
-            <div class="mb-4">
-              <div class="relative mx-auto">
-                <img [src]="item.imageUrl" [alt]="item.name" class="w-full rounded" />
-              </div>
-            </div>
-            <div class="mb-4 font-medium">{{ item.name }}</div>
-          </div>
-        </ng-template>
-      </p-carousel>
-      </span>
-    </div>
-  </div>
+  <app-category-section
+    [carouselId]="'antique-furniture'"
+    [title]="'Antique Furniture'"
+    [description]="'Bring history into your home with stunning antique pieces that tell a story. Crafted with character and charm, these treasures elevate any space.'"
+    [items]="antiqueFurnitureItems"
+  ></app-category-section>
 
-  <div class="category mt-4 ml-4 mr-4" id="gps-sport-watches">
-    <div class="category-info grid">
-      <span class="col-3">
-        <h2 class="text-color">GPS Sport Watches</h2>
-        <div class="align-items-center flex">CATEGORY INFO WILL COME HERE</div>
-      </span>
-      <span class="col-9">
-        <p-carousel [value]="gpsSportWatchesItems" [numVisible]="2" [numScroll]="1" orientation="horizontal" contentClass="flex items-center">
-        <ng-template let-item #item>
-          <div class="border border-surface-200 dark:border-surface-700 rounded m-2 p-4">
-            <div class="mb-4">
-              <div class="relative mx-auto">
-                <img [src]="item.imageUrl" [alt]="item.name" class="w-full rounded" />
-              </div>
-            </div>
-            <div class="mb-4 font-medium">{{ item.name }}</div>
-          </div>
-        </ng-template>
-      </p-carousel>
-      </span>
-    </div>
-  </div>
+  <app-category-section
+    [carouselId]="'gps-sport-watches'"
+    [title]="'GPS Sport Watches'"
+    [description]="'Stay ahead of the game with cutting-edge GPS sport watches that track your every move. Perfect for athletes and adventurers who demand precision and style.'"
+    [items]="gpsSportWatchesItems"
+  ></app-category-section>
 
-  <div class="category ml-4 mr-4" id="running-shoes">
-    <div class="category-info grid">
-      <span class="col-3">
-        <h2 class="text-color">Running Shoes</h2>
-        <div class="align-items-center flex">CATEGORY INFO WILL COME HERE</div>
-      </span>
-      <span class="col-9">
-        <p-carousel [value]="runningShoesItems" [numVisible]="2" [numScroll]="1" orientation="horizontal" contentClass="flex items-center">
-          <ng-template let-item #item>
-            <div class="border border-surface-200 dark:border-surface-700 rounded m-2 p-4">
-              <div class="mb-4">
-                <div class="relative mx-auto">
-                  <img [src]="item.imageUrl" [alt]="item.name" class="w-full rounded" />
-                </div>
-              </div>
-              <div class="mb-4 font-medium">{{ item.name }}</div>
-            </div>
-          </ng-template>
-        </p-carousel>
-      </span>
-    </div>
-  </div>
+  <app-category-section
+    [carouselId]="'running-shoes'"
+    [title]="'Running Shoes'"
+    [description]="'Push your limits with running shoes built for performance and comfort. Whether you’re chasing a personal best or hitting the pavement for fun, your perfect pair awaits.'"
+    [items]="runningShoesItems"
+  ></app-category-section>
 </div>
+
 
