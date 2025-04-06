@@ -20,6 +20,7 @@
                     <span class="align-items-center flex mr-2" [pTooltip]="item.rating" tooltipPosition="top">
                       <p-rating
                         [(ngModel)]="item.rating"
+                        [stars]="10"
                         [readonly]="true"
                         [iconOnStyle]="{'cursor': 'default'}"
                         [iconOffStyle]="{'cursor': 'default'}"
@@ -44,6 +45,6 @@
 
 <p-popover #ratingPanel [dismissable]="true">
   <div>
-    <p-rating [(ngModel)]="selectedItem.rating" (onRate)="submitRating()"></p-rating>
+    <p-rating [(ngModel)]="selectedItem.rating" (onRate)="submitRating()" [stars]="10"></p-rating>
   </div>
 </p-popover>

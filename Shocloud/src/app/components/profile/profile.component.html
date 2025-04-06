@@ -105,7 +105,7 @@
         <ng-template pTemplate="body" let-review>
           <tr>
             <td [style]="{'background-color': 'var(--background-color)', 'border-color': 'var(--accent-color)'}">{{ review.itemName }}</td>
-            <td [style]="{'background-color': 'var(--background-color)', 'border-color': 'var(--accent-color)'}"><p-rating [ngModel]="review.rating" [readonly]="true"></p-rating></td>
+            <td [style]="{'background-color': 'var(--background-color)', 'border-color': 'var(--accent-color)'}"><p-rating [ngModel]="review.rating" [readonly]="true" [stars]="10"></p-rating></td>
             <td [style]="{'background-color': 'var(--background-color)', 'border-color': 'var(--accent-color)'}">{{ review.review }}</td>
           </tr>
         </ng-template>
