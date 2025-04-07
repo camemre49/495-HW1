@@ -60,4 +60,8 @@ export class CategorySectionComponent implements OnInit{
   goToCategory(): void {
     this.router.navigate(['/home', this.title.toLowerCase()]);
   }
+
+  navigateToItem(itemId: any) {
+    this.router.navigate([`/home/items/${itemId}`])
+  }
 }
