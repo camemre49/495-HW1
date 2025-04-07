@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB from './config/mongo.js';
-import authRoutes from './routes/userRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 import itemRoutes from './routes/itemRoutes.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 
@@ -18,7 +18,7 @@ app.use(express.json());
 connectDB();
 
 // Routes
-app.use('/', authRoutes);  // Changed to /api for better route organization
+app.use('/users', userRoutes);  // Changed to /api for better route organization
 app.use('/items', itemRoutes);  // Add route for items
 
 // Error Handling

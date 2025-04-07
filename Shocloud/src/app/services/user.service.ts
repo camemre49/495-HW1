@@ -5,7 +5,7 @@ import {Observable, of, tap} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService extends BaseService {
+export class UserService extends BaseService {
 
   private loggedInUser: {
     id?: number;
@@ -15,14 +15,14 @@ export class LoginService extends BaseService {
   } = {};
 
   login(username: string, password: string) {
-    return this.http.post(`${this.API_URL}/login`, {
+    return this.http.post(`${this.API_URL}/users/login`, {
       username,
       password
     });
   }
 
   addUser(user: { username: string; password: string; role: string }) {
-    return this.http.post(`${this.API_URL}/users`, {
+    return this.http.post(`${this.API_URL}/users/add`, {
       ...user,
       requestedBy: this.loggedInUser.id
     });
@@ -30,7 +30,7 @@ export class LoginService extends BaseService {
 
   searchUsers(query: string) {
     const requestedBy = this.loggedInUser?.id ?? '';
-    return this.http.get<any[]>(`${this.API_URL}/searchUsers`, {
+    return this.http.get<any[]>(`${this.API_URL}/users/search`, {
       params: {
         username: query,
         requestedBy: requestedBy
@@ -39,10 +39,21 @@ export class LoginService extends BaseService {
   }
 
   removeUser(userId: string) {
-    return this.http.delete(`${this.API_URL}/removeUser/${userId}`,
+    return this.http.delete(`${this.API_URL}/users/remove/${userId}`,
       {
         body: { requestedBy: this.loggedInUser.id }
       });
+  }
+
+  getUserFromBackend(): Observable<any> {
+    const userId = this.loggedInUser?.id;
+    if (!userId) return of(null); // return dummy observable if no user
+
+    return this.http.get<any>(`${this.API_URL}/users`, {
+      params: { userId }
+    }).pipe(
+      tap(res => this.updateLoggedInUser(res))
+    );
   }
 
   updateLoggedInUser(res: any) {
@@ -68,16 +79,5 @@ export class LoginService extends BaseService {
 
   getLoggedInUser() {
     return this.loggedInUser
-  }
-
-  getUserFromBackend(): Observable<any> {
-    const userId = this.loggedInUser?.id;
-    if (!userId) return of(null); // return dummy observable if no user
-
-    return this.http.get<any>(`${this.API_URL}/users`, {
-      params: { userId }
-    }).pipe(
-      tap(res => this.updateLoggedInUser(res))
-    );
   }
 }

@@ -3,7 +3,7 @@ import {ButtonDirective} from 'primeng/button';
 import {Toolbar} from 'primeng/toolbar';
 import {Router} from '@angular/router';
 import {StyleService} from '../../services/style.service';
-import {LoginService} from '../../services/login.service';
+import {UserService} from '../../services/user.service';
 import {Card} from 'primeng/card';
 import {DecimalPipe, NgForOf, NgIf} from '@angular/common';
 import {MessageService, PrimeTemplate} from 'primeng/api';
@@ -26,7 +26,6 @@ import {AutoComplete} from 'primeng/autocomplete';
     Toolbar,
     Card,
     NgIf,
-    NgForOf,
     DecimalPipe,
     PrimeTemplate,
     Rating,
@@ -38,7 +37,6 @@ import {AutoComplete} from 'primeng/autocomplete';
     InputText,
     Password,
     Select,
-    Message,
     MessagesModule,
     AutoComplete
   ],
@@ -61,7 +59,7 @@ export class ProfileComponent implements OnInit{
   constructor(
     private router: Router,
     private styleService: StyleService,
-    private loginService: LoginService,
+    private userService: UserService,
     private fb: FormBuilder,
     private injector: Injector,
     private messageService: MessageService
@@ -80,7 +78,7 @@ export class ProfileComponent implements OnInit{
       this.styleService.labelHeight = "30px";
     })
 
-    this.loginService.getUserFromBackend()?.subscribe({
+    this.userService.getUserFromBackend()?.subscribe({
       next: (res) => {
         this.user = res;
         this.isAdmin = res.role === 'admin';
@@ -103,7 +101,7 @@ export class ProfileComponent implements OnInit{
   addUser() {
     if (this.addUserForm.invalid) return;
 
-    this.loginService.addUser(this.addUserForm.value).subscribe({
+    this.userService.addUser(this.addUserForm.value).subscribe({
       next: () => {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'User added successfully', life: 1000 });
         this.addUserForm.reset({ role: 'user' });
@@ -120,7 +118,7 @@ export class ProfileComponent implements OnInit{
   searchUsers(event: any) {
     const query = event.query;
 
-    this.loginService.searchUsers(query).subscribe((users) => {
+    this.userService.searchUsers(query).subscribe((users) => {
       this.filteredUsers = users;
     });
   }
@@ -128,7 +126,7 @@ export class ProfileComponent implements OnInit{
   removeUser() {
     if (!this.selectedUserToRemove) return;
 
-    this.loginService.removeUser(this.selectedUserToRemove._id).subscribe({
+    this.userService.removeUser(this.selectedUserToRemove._id).subscribe({
       next: () => {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'User removed', life: 1000});
         this.selectedUserToRemove = null;

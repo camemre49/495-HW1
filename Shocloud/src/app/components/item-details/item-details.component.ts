@@ -9,7 +9,7 @@ import {PrimeTemplate} from 'primeng/api';
 import {Rating} from 'primeng/rating';
 import {TableModule} from 'primeng/table';
 import {FormsModule} from '@angular/forms';
-import {LoginService} from '../../services/login.service';
+import {UserService} from '../../services/user.service';
 import {ItemService} from '../../services/item.service';
 
 @Component({
@@ -18,7 +18,6 @@ import {ItemService} from '../../services/item.service';
   standalone: true,
   imports: [
     NgIf,
-    NgForOf,
     ButtonDirective,
     Toolbar,
     PrimeTemplate,
@@ -42,7 +41,7 @@ export class ItemDetailsComponent implements OnInit {
     private http: HttpClient,
     private styleService: StyleService,
     private router: Router,
-    private loginService: LoginService,
+    private userService: UserService,
     private itemService: ItemService,
   ) {}
 
@@ -57,7 +56,7 @@ export class ItemDetailsComponent implements OnInit {
       this.fetchItemDetails();
     });
 
-    this.isAdmin = this.loginService.isAdmin();
+    this.isAdmin = this.userService.isAdmin();
   }
 
   fetchItemDetails(): void {
@@ -66,7 +65,7 @@ export class ItemDetailsComponent implements OnInit {
         this.item = data;
         this.categoryName = this.item.category
         // Check if the current user has already reviewed
-        const userReview = this.item.itemRatingsAndReviews?.find((review: any) => review.username === this.loginService.getLoggedInUser().username);
+        const userReview = this.item.itemRatingsAndReviews?.find((review: any) => review.username === this.userService.getLoggedInUser().username);
         if (userReview) {
           this.isReviewSubmitted = true;
           this.userRating = userReview.rating;
@@ -80,9 +79,9 @@ export class ItemDetailsComponent implements OnInit {
   }
 
   submitReview(): void {
-    const requestedBy = this.loginService.getLoggedInUser().id; // Assuming you have a method to get logged-in user ID
+    const requestedBy = this.userService.getLoggedInUser().id;
     const reviewData = {
-      username: this.loginService.getLoggedInUser().username,
+      username: this.userService.getLoggedInUser().username,
       rating: this.userRating,
       review: this.userReview,
       requestedBy
@@ -115,7 +114,7 @@ export class ItemDetailsComponent implements OnInit {
   removeItem() {
     if (confirm('Are you sure you want to delete this item?')) {
       // Fetch the requestedBy from the logged-in user
-      const requestedBy = this.loginService.getLoggedInUser().id; // Assuming you have a method for this
+      const requestedBy = this.userService.getLoggedInUser().id;
 
       // Call the removeItem method with requestedBy
       this.itemService.removeItem(this.itemId, requestedBy).subscribe(

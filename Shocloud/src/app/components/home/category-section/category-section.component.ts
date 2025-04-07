@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Carousel} from 'primeng/carousel';
 import {Button} from 'primeng/button';
 import {Rating} from 'primeng/rating';
@@ -16,13 +16,10 @@ import {StyleService} from '../../../services/style.service';
   standalone: true,
   imports: [
     Carousel,
-    Button,
     Rating,
     FormsModule,
     Tooltip,
     OverlayPanelModule,
-    Popover,
-    NgIf
   ],
   styleUrls: ['./category-section.component.css']
 })
@@ -32,9 +29,6 @@ export class CategorySectionComponent implements OnInit{
   @Input() items: any[] = [];
   @Input() carouselId: string = '';
 
-  @ViewChild('ratingPanel') ratingPanel!: Popover
-  selectedItem: any = {};
-
   constructor(private router: Router, private styleService: StyleService) {}
 
   ngOnInit() {
@@ -42,19 +36,6 @@ export class CategorySectionComponent implements OnInit{
       this.styleService.labelWidth = "125px";
       this.styleService.labelHeight = "30px";
     })
-  }
-
-  toggleRatingPanel(item: any) {
-    this.selectedItem = { ...item, rating: 0 };
-    console.log(this.selectedItem)
-  }
-
-  submitRating() {
-    console.log('Rating submitted:', this.selectedItem.rating);
-    setTimeout(() => {
-      this.ratingPanel.hide()
-    }, 300)
-    this.selectedItem = {}
   }
 
   goToCategory(): void {

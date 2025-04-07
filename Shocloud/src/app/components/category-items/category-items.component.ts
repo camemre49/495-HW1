@@ -9,7 +9,7 @@ import {HttpClient} from '@angular/common/http';
 import {StyleService} from '../../services/style.service';
 import {Toolbar} from 'primeng/toolbar';
 import {PrimeTemplate} from 'primeng/api';
-import {LoginService} from '../../services/login.service';
+import {UserService} from '../../services/user.service';
 import {log} from '@angular-devkit/build-angular/src/builders/ssr-dev-server';
 import {ItemService} from '../../services/item.service';
 
@@ -24,9 +24,7 @@ import {ItemService} from '../../services/item.service';
     NgForOf,
     FormsModule,
     Toolbar,
-    NgStyle,
     PrimeTemplate,
-    Button,
     NgIf
   ],
   styleUrls: ['./category-items.component.css']
@@ -55,7 +53,7 @@ export class CategoryItemsComponent implements OnInit {
     private http: HttpClient,
     private styleService: StyleService,
     private router: Router,
-    private loginService: LoginService,
+    private userService: UserService,
     private itemService: ItemService
   ) {}
 
@@ -76,7 +74,7 @@ export class CategoryItemsComponent implements OnInit {
       }
     });
 
-    this.isAdmin = this.loginService.isAdmin();
+    this.isAdmin = this.userService.isAdmin();
   }
 
   /*

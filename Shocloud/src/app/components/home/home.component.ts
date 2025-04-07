@@ -16,10 +16,6 @@ import {ItemService} from '../../services/item.service';
   imports: [
     Toolbar,
     ButtonDirective,
-    Carousel,
-    Card,
-    NgForOf,
-    Button,
     CategorySectionComponent
   ],
   styleUrl: './home.component.css'

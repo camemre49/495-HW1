@@ -1,7 +1,7 @@
 import {Injectable, Injector} from '@angular/core';
 import {BaseService} from './base.service';
 import {Observable} from 'rxjs';
-import {LoginService} from './login.service';
+import {UserService} from './user.service';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 
@@ -21,10 +21,9 @@ export class ItemService {
   constructor(
     private injector: Injector,
     private http: HttpClient,
-    private loginService: LoginService // Inject LoginService here
+    private userService: UserService
   ) {
-    // Optionally, you can access the login service during initialization
-    this.loggedInUser = this.loginService.getLoggedInUser(); // Assuming a method to get the logged-in user
+    this.loggedInUser = this.userService.getLoggedInUser();
   }
 
 
@@ -62,7 +61,7 @@ export class ItemService {
   }
 
   fetchItemDetails(itemId: string): Observable<any> {
-    return this.http.get<any>(`${this.API_URL}/items/item/${itemId}`);
+    return this.http.get<any>(`${this.API_URL}/items/${itemId}`);
   }
 
   submitNewItem(newItem: any): Observable<any> {
@@ -75,12 +74,12 @@ export class ItemService {
   }
 
   removeItem(itemId: string, requestedBy: any): Observable<any> {
-    return this.http.delete<any>(`${this.API_URL}/items/item/${itemId}`, {
+    return this.http.delete<any>(`${this.API_URL}/items/${itemId}`, {
       body: { requestedBy }  // Sending the requestedBy in the body of the DELETE request
     });
   }
 
   submitReview(itemId: string, reviewData: any): Observable<any> {
-    return this.http.put(`${this.API_URL}/items/item/${itemId}/review`, reviewData);
+    return this.http.put(`${this.API_URL}/items/${itemId}/review`, reviewData);
   }
 }

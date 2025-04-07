@@ -6,12 +6,12 @@ const router = express.Router();
 
 router.post('/login', login);
 
-router.post('/users', addUser)
+router.post('/add', addUser)
 
-router.get('/searchUsers', searchUsers);
+router.get('/search', searchUsers);
 
-router.delete('/removeUser/:userId', removeUser);
+router.delete('/remove/:userId', removeUser);
 
-router.get('/users', getUserById);
+router.get('/', getUserById);
 
 export default router;
