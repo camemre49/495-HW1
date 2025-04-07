@@ -37,7 +37,7 @@ export class ItemService {
           case 'vinyls':
             this.vinylsItems = data;
             break;
-          case 'antique-furniture':
+          case 'antique-furnitures':
             this.antiqueFurnitureItems = data;
             break;
           case 'gps-sport-watches':
@@ -56,6 +56,15 @@ export class ItemService {
     );
   }
 
+  // Fetch items by category
+  fetchItemsByCategory(category: string): Observable<any> {
+    return this.http.get<any>(`${this.API_URL}/items/category/${category}`);
+  }
+
+  fetchItemDetails(itemId: string): Observable<any> {
+    return this.http.get<any>(`${this.API_URL}/items/item/${itemId}`);
+  }
+
   submitNewItem(newItem: any): Observable<any> {
     console.log(this.loggedInUser.id)
     return this.http.post<any>(`${this.API_URL}/items`,
@@ -63,5 +72,11 @@ export class ItemService {
         ...newItem,
         requestedBy: this.loggedInUser.id
       });
+  }
+
+  removeItem(itemId: string, requestedBy: any): Observable<any> {
+    return this.http.delete<any>(`${this.API_URL}/items/item/${itemId}`, {
+      body: { requestedBy }  // Sending the requestedBy in the body of the DELETE request
+    });
   }
 }

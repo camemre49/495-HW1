@@ -90,8 +90,26 @@ export class AddItemComponent implements OnInit {
   }
 
   submitNewItem() {
-    this.newItem.category = this.rawCategoryName.toLowerCase()
-    this.itemService.submitNewItem(this.newItem).subscribe(
+    // Normalize category to lowercase
+    this.newItem.category = this.rawCategoryName.toLowerCase();
+
+    // Filter out fields that have default values (e.g., empty strings, 0, etc.)
+    const filteredItem: any = { ...this.newItem };
+
+    // Remove fields with default values
+    for (const key in filteredItem) {
+      if (
+        filteredItem[key] === '' ||
+        filteredItem[key] === 0 ||
+        filteredItem[key] === null ||
+        filteredItem[key] === undefined
+      ) {
+        delete filteredItem[key];
+      }
+    }
+
+    // Submit the filtered item to the backend
+    this.itemService.submitNewItem(filteredItem).subscribe(
       (response) => {
         // Handle success
         console.log('Item submitted successfully', response);
@@ -115,6 +133,7 @@ export class AddItemComponent implements OnInit {
       }
     );
   }
+
 
   navigateToUserPanel() {
     this.router.navigate(['/profile']);

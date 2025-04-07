@@ -20,7 +20,7 @@ export const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'profile',
@@ -29,16 +29,16 @@ export const routes: Routes = [
   },
   { path: 'home/:categoryName',
     component: CategoryItemsComponent,
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'home/:categoryName/addItem',
     component: AddItemComponent,
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'home/:categoryName/:itemId',
     component: ItemDetailsComponent,
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   }
 ];

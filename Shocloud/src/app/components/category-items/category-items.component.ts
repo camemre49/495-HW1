@@ -2,13 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import {Rating} from 'primeng/rating';
 import {Button, ButtonDirective} from 'primeng/button';
 import {Card} from 'primeng/card';
-import {NgForOf, NgStyle} from '@angular/common';
+import {NgForOf, NgIf, NgStyle} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {StyleService} from '../../services/style.service';
 import {Toolbar} from 'primeng/toolbar';
 import {PrimeTemplate} from 'primeng/api';
+import {LoginService} from '../../services/login.service';
+import {log} from '@angular-devkit/build-angular/src/builders/ssr-dev-server';
+import {ItemService} from '../../services/item.service';
 
 @Component({
   selector: 'app-category-items',
@@ -23,177 +26,37 @@ import {PrimeTemplate} from 'primeng/api';
     Toolbar,
     NgStyle,
     PrimeTemplate,
-    Button
+    Button,
+    NgIf
   ],
   styleUrls: ['./category-items.component.css']
 })
 export class CategoryItemsComponent implements OnInit {
   fetchItems(category: string): void {
-    // Mock data
-    const mockCategoryData = {
-      description: `Showing all items under ${category}`,
-      items: [
-        {
-          id: 1,
-          name: 'Mock Product 1',
-          rating: 7,
-          imageUrl: 'https://via.placeholder.com/150'
-        },
-        {
-          id: 2,
-          name: 'Mock Product 2',
-          rating: 5,
-          imageUrl: 'https://via.placeholder.com/150'
-        },
-        {
-          id: 3,
-          name: 'Mock Product 3',
-          rating: 8,
-          imageUrl: 'https://via.placeholder.com/150'
-        },
-        {
-          id: 7,
-          name: 'Mock Product 1',
-          rating: 7,
-          imageUrl: 'https://via.placeholder.com/150'
-        },
-        {
-          id: 8,
-          name: 'Mock Product 2',
-          rating: 5,
-          imageUrl: 'https://via.placeholder.com/150'
-        },
-        {
-          id: 9,
-          name: 'Mock Product 3',
-          rating: 8,
-          imageUrl: 'https://via.placeholder.com/150'
-        },
-        {
-          id: 1,
-          name: 'Mock Product 1',
-          rating: 7,
-          imageUrl: 'https://via.placeholder.com/150'
-        },
-        {
-          id: 2,
-          name: 'Mock Product 2',
-          rating: 5,
-          imageUrl: 'https://via.placeholder.com/150'
-        },
-        {
-          id: 3,
-          name: 'Mock Product 3',
-          rating: 8,
-          imageUrl: 'https://via.placeholder.com/150'
-        },
-        {
-          id: 7,
-          name: 'Mock Product 1',
-          rating: 7,
-          imageUrl: 'https://via.placeholder.com/150'
-        },
-        {
-          id: 8,
-          name: 'Mock Product 2',
-          rating: 5,
-          imageUrl: 'https://via.placeholder.com/150'
-        },
-        {
-          id: 9,
-          name: 'Mock Product 3',
-          rating: 8,
-          imageUrl: 'https://via.placeholder.com/150'
-        },
-        {
-          id: 1,
-          name: 'Mock Product 1',
-          rating: 7,
-          imageUrl: 'https://via.placeholder.com/150'
-        },
-        {
-          id: 2,
-          name: 'Mock Product 2',
-          rating: 5,
-          imageUrl: 'https://via.placeholder.com/150'
-        },
-        {
-          id: 3,
-          name: 'Mock Product 3',
-          rating: 8,
-          imageUrl: 'https://via.placeholder.com/150'
-        },
-        {
-          id: 7,
-          name: 'Mock Product 1',
-          rating: 7,
-          imageUrl: 'https://via.placeholder.com/150'
-        },
-        {
-          id: 8,
-          name: 'Mock Product 2',
-          rating: 5,
-          imageUrl: 'https://via.placeholder.com/150'
-        },
-        {
-          id: 9,
-          name: 'Mock Product 3',
-          rating: 8,
-          imageUrl: 'https://via.placeholder.com/150'
-        },
-        {
-          id: 1,
-          name: 'Mock Product 1',
-          rating: 7,
-          imageUrl: 'https://via.placeholder.com/150'
-        },
-        {
-          id: 2,
-          name: 'Mock Product 2',
-          rating: 5,
-          imageUrl: 'https://via.placeholder.com/150'
-        },
-        {
-          id: 3,
-          name: 'Mock Product 3',
-          rating: 8,
-          imageUrl: 'https://via.placeholder.com/150'
-        },
-        {
-          id: 7,
-          name: 'Mock Product 1',
-          rating: 7,
-          imageUrl: 'https://via.placeholder.com/150'
-        },
-        {
-          id: 8,
-          name: 'Mock Product 2',
-          rating: 5,
-          imageUrl: 'https://via.placeholder.com/150'
-        },
-        {
-          id: 9,
-          name: 'Mock Product 3',
-          rating: 8,
-          imageUrl: 'https://via.placeholder.com/150'
-        }
-      ]
-    };
-
-    this.categoryDescription = mockCategoryData.description;
-    this.items = mockCategoryData.items;
+    this.itemService.fetchItemsByCategory(category).subscribe(
+      (data) => {
+        this.categoryDescription = data.description;
+        this.items = data.items;
+      },
+      (error) => {
+        console.error('Error fetching items:', error);
+      }
+    );
   }
 
   categoryTitle = '';
   categoryDescription = '';
   items: any[] = [];
   selectedItem: any;
+  isAdmin = false;
 
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
     private styleService: StyleService,
-    private router: Router
+    private router: Router,
+    private loginService: LoginService,
+    private itemService: ItemService
   ) {}
 
   ngOnInit(): void {
@@ -212,6 +75,8 @@ export class CategoryItemsComponent implements OnInit {
         this.fetchItems(categoryName);
       }
     });
+
+    this.isAdmin = this.loginService.isAdmin();
   }
 
   /*

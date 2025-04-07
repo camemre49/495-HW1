@@ -3,7 +3,8 @@ import User from "../schemas/User.js";
 
 // Controller method to fetch random items for a specific category
 export const fetchRandomItems = async (req, res) => {
-    const { category } = req.params;
+    let { category } = req.params;
+    category = category.replace(/-/g, ' ');
 
     try {
         // Fetch 6 random items based on category
@@ -25,6 +26,26 @@ export const fetchRandomItems = async (req, res) => {
             success: false,
             message: 'Server error while fetching random items.'
         });
+    }
+};
+
+// Controller method to fetch items based on category
+export const fetchItemsByCategory = async (req, res) => {
+    const { category } = req.params;
+
+    try {
+        // Fetch items by category
+        const items = await Item.find({ category: category });
+
+        if (items.length === 0) {
+            return res.status(404).json({ message: 'No items found in this category' });
+        }
+
+        // Return the items as response
+        res.json({ description: `Showing all items under ${category}`, items });
+    } catch (err) {
+        console.error('Error fetching items:', err);
+        res.status(500).json({ message: 'Server error while fetching items' });
     }
 };
 
@@ -75,5 +96,55 @@ export const addItem = async (req, res) => {
             success: false,
             message: 'Server error while adding item.'
         });
+    }
+};
+
+export const removeItem = async (req, res) => {
+    const {itemId} = req.params;
+    const {requestedBy} = req.body;
+
+    try {
+        // Check if the user is an admin
+        const user = await User.findById(requestedBy);
+
+        if (!user) {
+            return res.status(404).json({message: 'User not found'});
+        }
+
+        if (user.role !== 'admin') {
+            return res.status(403).json({message: 'You do not have permission to add items'});
+        }
+
+        // Find the item and delete it
+        const item = await Item.findByIdAndDelete(itemId);
+
+        if (!item) {
+            return res.status(404).json({message: 'Item not found'});
+        }
+
+        res.status(200).json({message: 'Item removed successfully'});
+    } catch (err) {
+        console.error('Error removing item:', err);
+        res.status(500).json({message: 'Error deleting item'});
+    }
+};
+
+// Controller method to fetch item details by ID
+export const fetchItemDetails = async (req, res) => {
+    const { itemId } = req.params;
+
+    try {
+        // Fetch item details by itemId
+        const item = await Item.findById(itemId);
+
+        if (!item) {
+            return res.status(404).json({ message: 'Item not found' });
+        }
+
+        // Return the item details
+        res.json(item);
+    } catch (err) {
+        console.error('Error fetching item details:', err);
+        res.status(500).json({ message: 'Server error while fetching item details' });
     }
 };

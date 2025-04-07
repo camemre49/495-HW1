@@ -16,16 +16,16 @@
     <h2 class="text-3xl mb-3 text-color">{{ categoryTitle }}</h2>
 
     <span class="align-items-center">
-      <button pButton icon="pi pi-plus" label="Add Item"  (click)="navigateToAddItemComponent()"></button>
+      <button *ngIf="isAdmin" pButton icon="pi pi-plus" label="Add Item"  (click)="navigateToAddItemComponent()"></button>
     </span>
   </div>
 
   <div class="grid grid-nogutter md:grid-cols-3 gap-4">
     <ng-container *ngFor="let item of items">
-      <p-card class="shadow-2" (click)="goToItemDetails(item.id)" [style]="{cursor:'pointer'}">
+      <p-card class="shadow-2" (click)="goToItemDetails(item._id)" [style]="{cursor:'pointer'}">
         <ng-template pTemplate="header">
           <div class="relative mx-auto">
-            <img [src]="'label.png'" [alt]="item.name" width="84" height="84" class="w-full rounded" />
+            <img [src]="item.image" [alt]="item.name" width="84" height="168" class="w-full rounded" />
           </div>
         </ng-template>
 

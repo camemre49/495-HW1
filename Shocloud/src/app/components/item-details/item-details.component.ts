@@ -10,6 +10,7 @@ import {Rating} from 'primeng/rating';
 import {TableModule} from 'primeng/table';
 import {FormsModule} from '@angular/forms';
 import {LoginService} from '../../services/login.service';
+import {ItemService} from '../../services/item.service';
 
 @Component({
   selector: 'app-item-details',
@@ -38,7 +39,8 @@ export class ItemDetailsComponent implements OnInit {
     private http: HttpClient,
     private styleService: StyleService,
     private router: Router,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private itemService: ItemService,
   ) {}
 
   ngOnInit(): void {
@@ -58,29 +60,14 @@ export class ItemDetailsComponent implements OnInit {
   }
 
   fetchItemDetails(): void {
-    // Mock data instead of an API call
-    const mockData = {
-      id: this.itemId,
-      name: 'Sample Item',
-      description: 'This is a description of the item.',
-      price: 99.99,
-      seller: 'Sample Seller',
-      image: 'https://via.placeholder.com/150',
-      batteryLife: '20 hours',  // Only for relevant items
-      age: 50,  // Only for relevant items
-      size: 'Large',  // Only for relevant items
-      material: 'Leather',  // Only for relevant items
-      rating: 4.5,
-      itemRatingsAndReviews: [
-        { username: 'John Doe', rating: 5, review: 'Great product!' },
-        { username: 'Jane Smith', rating: 4, review: 'Good value for the price.' }
-      ]
-    };
-
-    // Simulating a successful API response
-    setTimeout(() => {
-      this.item = mockData;
-    }, 500); // Simulate network delay
+    this.itemService.fetchItemDetails(this.itemId).subscribe(
+      (data) => {
+        this.item = data; // Set the actual data from the API response
+      },
+      (error) => {
+        console.error('Error fetching item details:', error);
+      }
+    );
   }
 
   navigateToHomePanel() {
@@ -92,6 +79,20 @@ export class ItemDetailsComponent implements OnInit {
   }
 
   removeItem() {
-    // TODO
+    if (confirm('Are you sure you want to delete this item?')) {
+      // Fetch the requestedBy from the logged-in user
+      const requestedBy = this.loginService.getLoggedInUser().id; // Assuming you have a method for this
+
+      // Call the removeItem method with requestedBy
+      this.itemService.removeItem(this.itemId, requestedBy).subscribe(
+        (response) => {
+          alert('Item removed successfully');
+          this.router.navigate([`/home/${this.categoryName}`])
+        },
+        (error) => {
+          console.error('Error removing item:', error);
+        }
+      );
+    }
   }
 }

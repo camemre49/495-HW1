@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
 
     // Fetch random items for each category
     this.itemService.fetchRandomItems('vinyls');
-    this.itemService.fetchRandomItems('antique-furniture');
+    this.itemService.fetchRandomItems('antique-furnitures');
     this.itemService.fetchRandomItems('gps-sport-watches');
     this.itemService.fetchRandomItems('running-shoes');
   }
