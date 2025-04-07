@@ -53,7 +53,6 @@ export class ItemDetailsComponent implements OnInit {
     });
 
     this.route.paramMap.subscribe(params => {
-      this.categoryName = params.get('categoryName')!;
       this.itemId = params.get('itemId')!;
       this.fetchItemDetails();
     });
@@ -65,6 +64,7 @@ export class ItemDetailsComponent implements OnInit {
     this.itemService.fetchItemDetails(this.itemId).subscribe(
       (data) => {
         this.item = data;
+        this.categoryName = this.item.category
         // Check if the current user has already reviewed
         const userReview = this.item.itemRatingsAndReviews?.find((review: any) => review.username === this.loginService.getLoggedInUser().username);
         if (userReview) {

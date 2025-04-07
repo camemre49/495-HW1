@@ -143,4 +143,8 @@ export class ProfileComponent implements OnInit{
       }
     });
   }
+
+  navigateToItem(itemId: any) {
+    this.router.navigate([`/home/items/${itemId}`]);
+  }
 }

@@ -107,7 +107,7 @@ export class CategoryItemsComponent implements OnInit {
   }
 
   goToItemDetails(itemId: string): void {
-    this.router.navigate([`/home/${this.categoryTitle.toLowerCase()}/${itemId}`]);
+    this.router.navigate([`/home/items/${itemId}`]);
   }
 
   navigateToAddItemComponent() {

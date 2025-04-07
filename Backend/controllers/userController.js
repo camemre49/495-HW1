@@ -1,4 +1,5 @@
 import User from '../schemas/User.js';
+import Item from "../schemas/Item.js";
 
 export const login = async (req, res) => {
     const { username, password } = req.body;
@@ -124,14 +125,39 @@ export const removeUser = async (req, res) => {
             return res.status(403).json({ success: false, message: 'Unauthorized' });
         }
 
-        const user = await User.findByIdAndDelete(userId);
-        if (!user) {
+        // Find the user to be deleted
+        const userToDelete = await User.findById(userId);
+        if (!userToDelete) {
             return res.status(404).json({ success: false, message: 'User not found' });
         }
 
-        // Optional: Cleanup ratings/reviews/etc.
+        const { username } = userToDelete;
 
-        res.json({ success: true, message: 'User removed successfully' });
+        // Find all items that include reviews from the user
+        const items = await Item.find({ "itemRatingsAndReviews.userId": userId });
+
+        for (const item of items) {
+            // Remove reviews associated with this user
+            item.itemRatingsAndReviews = item.itemRatingsAndReviews.filter(
+                (review) => (
+                    review.username !== username &&
+                    review.userId?.toString() !== userId
+                )
+            );
+
+            // Recalculate average rating
+            const totalRating = item.itemRatingsAndReviews.reduce((sum, r) => sum + r.rating, 0);
+            const reviewCount = item.itemRatingsAndReviews.length;
+            item.rating = reviewCount > 0 ? parseFloat((totalRating / reviewCount).toFixed(1)) : undefined;
+
+            await item.save();
+        }
+
+        // Finally delete the user
+        await User.findByIdAndDelete(userId);
+
+        res.json({ success: true, message: 'User and related reviews removed successfully' });
+
     } catch (err) {
         console.error('Error removing user:', err);
         res.status(500).json({ success: false, message: 'Server error' });

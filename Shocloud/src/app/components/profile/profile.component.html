@@ -104,7 +104,7 @@
 
         <ng-template pTemplate="body" let-review>
           <tr>
-            <td [style]="{'background-color': 'var(--background-color)', 'border-color': 'var(--accent-color)'}">{{ review.itemName }}</td>
+            <td (click)="navigateToItem(review.itemId)" class="underline cursor-pointer" [style]="{'background-color': 'var(--background-color)', 'border-color': 'var(--accent-color)'}">{{ review.itemId }}</td>
             <td [style]="{'background-color': 'var(--background-color)', 'border-color': 'var(--accent-color)'}"><p-rating [ngModel]="review.rating" [readonly]="true" [stars]="10"></p-rating></td>
             <td [style]="{'background-color': 'var(--background-color)', 'border-color': 'var(--accent-color)'}">{{ review.review }}</td>
           </tr>

@@ -112,17 +112,24 @@ export const removeItem = async (req, res) => {
         }
 
         if (user.role !== 'admin') {
-            return res.status(403).json({message: 'You do not have permission to add items'});
+            return res.status(403).json({ message: 'You do not have permission to remove items' });
         }
 
-        // Find the item and delete it
+        // Find the item
         const item = await Item.findByIdAndDelete(itemId);
 
         if (!item) {
-            return res.status(404).json({message: 'Item not found'});
+            return res.status(404).json({ message: 'Item not found' });
         }
 
-        res.status(200).json({message: 'Item removed successfully'});
+        // Remove this item's reviews from all users
+        await User.updateMany(
+            {},
+            { $pull: { ratingsAndReviews: { itemId: item._id } } }
+        );
+
+        res.status(200).json({ message: 'Item and related user reviews removed successfully' });
+
     } catch (err) {
         console.error('Error removing item:', err);
         res.status(500).json({message: 'Error deleting item'});
@@ -169,26 +176,32 @@ export const submitReview = async (req, res) => {
         // === Update item review ===
         if (!item.itemRatingsAndReviews) item.itemRatingsAndReviews = [];
 
-        const existingItemReview = item.itemRatingsAndReviews.find(r => r.username === username);
+        const existingItemReview = item.itemRatingsAndReviews.find(
+            r => r.username === username || r.userId?.toString() === user._id.toString()
+        );
 
         if (existingItemReview) {
             existingItemReview.rating = rating;
             existingItemReview.review = review;
-            existingItemReview.requestedBy = requestedBy;
         } else {
-            item.itemRatingsAndReviews.push({ username, rating, review, requestedBy });
+            item.itemRatingsAndReviews.push({
+                userId: user._id,
+                username,
+                rating,
+                review
+            });
         }
 
         // === Recalculate and update average rating ===
         const totalRating = item.itemRatingsAndReviews.reduce((acc, r) => acc + r.rating, 0);
-        item.rating = totalRating / item.itemRatingsAndReviews.length;
+        item.rating = parseFloat((totalRating / item.itemRatingsAndReviews.length).toFixed(1));
 
         // === Update user review ===
         if (!user.ratingsAndReviews) user.ratingsAndReviews = [];
 
-        console.log(user)
-
-        const existingUserReview = user.ratingsAndReviews.find(r => r.itemId.toString() === itemId);
+        const existingUserReview = user.ratingsAndReviews.find(
+            r => r.itemId.toString() === itemId
+        );
 
         if (existingUserReview) {
             existingUserReview.rating = rating;
@@ -204,8 +217,8 @@ export const submitReview = async (req, res) => {
         }
 
         // === Save both ===
-        await item.save()
-        await user.save()
+        await item.save();
+        await user.save();
 
         res.status(200).json({ message: 'Review submitted successfully' });
 
@@ -223,7 +236,7 @@ export const getUserById = async (req, res) => {
     }
 
     try {
-        const user = await User.findById(userId).populate('ratingsAndReviews.itemId');
+        const user = await User.findById(userId);
 
         if (!user) {
             return res.status(404).json({ success: false, message: 'User not found.' });
