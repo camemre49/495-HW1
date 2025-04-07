@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
+import {Observable, of, tap} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -67,5 +68,16 @@ export class LoginService extends BaseService {
 
   getLoggedInUser() {
     return this.loggedInUser
+  }
+
+  getUserFromBackend(): Observable<any> {
+    const userId = this.loggedInUser?.id;
+    if (!userId) return of(null); // return dummy observable if no user
+
+    return this.http.get<any>(`${this.API_URL}/users`, {
+      params: { userId }
+    }).pipe(
+      tap(res => this.updateLoggedInUser(res))
+    );
   }
 }

@@ -43,10 +43,10 @@ const itemSchema = new mongoose.Schema({
         type: String, // Only for GPS sport watches
     },
     age: {
-        type: String, // Only for antique furniture and vinyls
+        type: Number, // Only for antique furniture and vinyls
     },
     size: {
-        type: String, // Only for running shoes
+        type: Number, // Only for running shoes
     },
     material: {
         type: String, // Only for antique furniture and running shoes

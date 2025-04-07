@@ -55,11 +55,11 @@
         </div>
       </div>
 
-      <div *ngIf="item && !isReviewSubmitted" class="review-section">
-        <h3>Leave a Review</h3>
-        <p-rating [(ngModel)]="userRating" [stars]="10"></p-rating>
-        <textarea [(ngModel)]="userReview" placeholder="Write your review here..." rows="5" class="p-inputtext p-component"></textarea>
-        <button pButton label="Submit Review" icon="pi pi-check" (click)="submitReview()" class="p-button-success mt-2"></button>
+      <div *ngIf="item && !isReviewSubmitted" class="review-section align-items-center grid mb-2 border-1 border-black-alpha-60 background-color">
+        <h3 class="col-12">Leave a Review</h3>
+        <textarea  [(ngModel)]="userReview" placeholder="Write your review here..." rows="5" class="p-inputtext p-component col-12"></textarea>
+        <p-rating class="col-3" [(ngModel)]="userRating" [stars]="10"></p-rating>
+        <button pButton label="Submit Review" icon="pi pi-check" (click)="submitReview()" class="p-button-success mt-2 col-2 mb-2"></button>
       </div>
 
       <div *ngIf="item && isReviewSubmitted" class="review-section align-items-center grid mb-2 border-1 border-black-alpha-60 background-color" style="margin-left: 0.1rem; margin-right: 0.1rem ">

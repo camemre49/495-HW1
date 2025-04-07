@@ -80,8 +80,15 @@ export class ProfileComponent implements OnInit{
       this.styleService.labelHeight = "30px";
     })
 
-    this.user = this.loginService.getUser();
-    this.isAdmin = this.loginService.isAdmin();
+    this.loginService.getUserFromBackend()?.subscribe({
+      next: (res) => {
+        this.user = res;
+        this.isAdmin = res.role === 'admin';
+      },
+      error: (err) => {
+        console.error('Error fetching user:', err);
+      }
+    });
   }
 
   getAverageRating(): number {

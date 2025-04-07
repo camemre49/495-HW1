@@ -160,37 +160,83 @@ export const submitReview = async (req, res) => {
             return res.status(404).json({ message: 'Item not found' });
         }
 
-        // Ensure the itemRatingsAndReviews array is initialized
-        if (!item.itemRatingsAndReviews) {
-            item.itemRatingsAndReviews = [];
+        // Find the user
+        const user = await User.findOne({ username });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
         }
 
-        // Check if the user has already reviewed this item
-        const existingReview = item.itemRatingsAndReviews.find(r => r.username === username);
+        // === Update item review ===
+        if (!item.itemRatingsAndReviews) item.itemRatingsAndReviews = [];
 
-        if (existingReview) {
-            // Update the existing review
-            existingReview.rating = rating;
-            existingReview.review = review;
-            existingReview.requestedBy = requestedBy;
+        const existingItemReview = item.itemRatingsAndReviews.find(r => r.username === username);
+
+        if (existingItemReview) {
+            existingItemReview.rating = rating;
+            existingItemReview.review = review;
+            existingItemReview.requestedBy = requestedBy;
         } else {
-            // Add new review
             item.itemRatingsAndReviews.push({ username, rating, review, requestedBy });
         }
 
-        // Save the item with the updated review
-        await item.save();
-
-        // Recalculate the average rating if needed
-        const totalRating = item.itemRatingsAndReviews.reduce((acc, review) => acc + review.rating, 0);
+        // === Recalculate and update average rating ===
+        const totalRating = item.itemRatingsAndReviews.reduce((acc, r) => acc + r.rating, 0);
         item.rating = totalRating / item.itemRatingsAndReviews.length;
 
-        // Save the updated rating
-        await item.save();
+        // === Update user review ===
+        if (!user.ratingsAndReviews) user.ratingsAndReviews = [];
+
+        console.log(user)
+
+        const existingUserReview = user.ratingsAndReviews.find(r => r.itemId.toString() === itemId);
+
+        if (existingUserReview) {
+            existingUserReview.rating = rating;
+            existingUserReview.review = review;
+            existingUserReview.createdAt = new Date();
+        } else {
+            user.ratingsAndReviews.push({
+                itemId,
+                rating,
+                review,
+                createdAt: new Date()
+            });
+        }
+
+        // === Save both ===
+        await item.save()
+        await user.save()
 
         res.status(200).json({ message: 'Review submitted successfully' });
+
     } catch (error) {
         console.error('Error submitting review:', error);
         res.status(500).json({ message: 'Error submitting review' });
+    }
+};
+
+export const getUserById = async (req, res) => {
+    const { userId } = req.query;
+
+    if (!userId) {
+        return res.status(400).json({ success: false, message: 'User ID is required.' });
+    }
+
+    try {
+        const user = await User.findById(userId).populate('ratingsAndReviews.itemId');
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User not found.' });
+        }
+
+        res.status(200).json({
+            id: user._id,
+            username: user.username,
+            role: user.role,
+            ratingsAndReviews: user.ratingsAndReviews
+        });
+    } catch (err) {
+        console.error('Error fetching user:', err);
+        res.status(500).json({ success: false, message: 'Server error while fetching user.' });
     }
 };
