@@ -33,6 +33,9 @@ export class ItemDetailsComponent implements OnInit {
   categoryName: string;
   itemId: string;
   isAdmin: boolean;
+  isReviewSubmitted: boolean = false; // Flag to check if user has submitted a review
+  userRating: number = 0; // Rating selected by the user
+  userReview: string = ''; // Review text by the user
 
   constructor(
     private route: ActivatedRoute,
@@ -47,9 +50,8 @@ export class ItemDetailsComponent implements OnInit {
     setTimeout(() => {
       this.styleService.labelWidth = "125px";
       this.styleService.labelHeight = "30px";
-    })
+    });
 
-    // Get both categoryName and itemId from route parameters
     this.route.paramMap.subscribe(params => {
       this.categoryName = params.get('categoryName')!;
       this.itemId = params.get('itemId')!;
@@ -62,12 +64,45 @@ export class ItemDetailsComponent implements OnInit {
   fetchItemDetails(): void {
     this.itemService.fetchItemDetails(this.itemId).subscribe(
       (data) => {
-        this.item = data; // Set the actual data from the API response
+        this.item = data;
+        // Check if the current user has already reviewed
+        const userReview = this.item.itemRatingsAndReviews?.find((review: any) => review.username === this.loginService.getLoggedInUser().username);
+        if (userReview) {
+          this.isReviewSubmitted = true;
+          this.userRating = userReview.rating;
+          this.userReview = userReview.review;
+        }
       },
       (error) => {
         console.error('Error fetching item details:', error);
       }
     );
+  }
+
+  submitReview(): void {
+    const requestedBy = this.loginService.getLoggedInUser().id; // Assuming you have a method to get logged-in user ID
+    const reviewData = {
+      username: this.loginService.getLoggedInUser().username,
+      rating: this.userRating,
+      review: this.userReview,
+      requestedBy
+    };
+
+    this.itemService.submitReview(this.itemId, reviewData).subscribe(
+      (response) => {
+        alert('Review submitted successfully!');
+        this.isReviewSubmitted = true;
+        this.fetchItemDetails(); // Fetch updated item details with the review
+      },
+      (error) => {
+        console.error('Error submitting review:', error);
+      }
+    );
+  }
+
+  editReview(): void {
+    // Allow the user to update their review
+    this.isReviewSubmitted = false;
   }
 
   navigateToHomePanel() {

@@ -9,7 +9,7 @@ const reviewSchema = new mongoose.Schema({
         type: Number,
         required: true,
         min: 1,
-        max: 5
+        max: 10
     },
     review: {
         type: String,
@@ -54,13 +54,9 @@ const itemSchema = new mongoose.Schema({
     rating: {
         type: Number, // Average rating
         min: 1,
-        max: 5,
+        max: 10,
     },
-    reviews: [reviewSchema], // List of reviews
-    numberOfReviewers: {
-        type: Number,
-        default: 0,
-    },
+    itemRatingsAndReviews: [reviewSchema], // List of reviews
     category: {
         type: String,
         required: true,

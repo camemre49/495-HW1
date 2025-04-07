@@ -148,3 +148,49 @@ export const fetchItemDetails = async (req, res) => {
         res.status(500).json({ message: 'Server error while fetching item details' });
     }
 };
+
+export const submitReview = async (req, res) => {
+    const { itemId } = req.params;
+    const { username, rating, review, requestedBy } = req.body;
+
+    try {
+        // Find the item
+        const item = await Item.findById(itemId);
+        if (!item) {
+            return res.status(404).json({ message: 'Item not found' });
+        }
+
+        // Ensure the itemRatingsAndReviews array is initialized
+        if (!item.itemRatingsAndReviews) {
+            item.itemRatingsAndReviews = [];
+        }
+
+        // Check if the user has already reviewed this item
+        const existingReview = item.itemRatingsAndReviews.find(r => r.username === username);
+
+        if (existingReview) {
+            // Update the existing review
+            existingReview.rating = rating;
+            existingReview.review = review;
+            existingReview.requestedBy = requestedBy;
+        } else {
+            // Add new review
+            item.itemRatingsAndReviews.push({ username, rating, review, requestedBy });
+        }
+
+        // Save the item with the updated review
+        await item.save();
+
+        // Recalculate the average rating if needed
+        const totalRating = item.itemRatingsAndReviews.reduce((acc, review) => acc + review.rating, 0);
+        item.rating = totalRating / item.itemRatingsAndReviews.length;
+
+        // Save the updated rating
+        await item.save();
+
+        res.status(200).json({ message: 'Review submitted successfully' });
+    } catch (error) {
+        console.error('Error submitting review:', error);
+        res.status(500).json({ message: 'Error submitting review' });
+    }
+};

@@ -79,4 +79,8 @@ export class ItemService {
       body: { requestedBy }  // Sending the requestedBy in the body of the DELETE request
     });
   }
+
+  submitReview(itemId: string, reviewData: any): Observable<any> {
+    return this.http.put(`${this.API_URL}/items/item/${itemId}/review`, reviewData);
+  }
 }
