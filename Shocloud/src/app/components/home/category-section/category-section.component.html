@@ -28,14 +28,6 @@
                         [iconOffStyle]="{'cursor': 'default'}"
                       ></p-rating>
                     </span>
-                    <p-button
-                      icon="pi pi-star"
-                      pTooltip="Rate the product"
-                      tooltipPosition="top"
-                      [severity]="'secondary'"
-                      [outlined]="true"
-                      (click)="ratingPanel.toggle($event); toggleRatingPanel(item)"
-                    />
                 </span>
             </div>
           </div>
@@ -44,9 +36,3 @@
     </span>
   </div>
 </div>
-
-<p-popover #ratingPanel [dismissable]="true">
-  <div>
-    <p-rating [(ngModel)]="selectedItem.rating" (onRate)="submitRating()" [stars]="10"></p-rating>
-  </div>
-</p-popover>

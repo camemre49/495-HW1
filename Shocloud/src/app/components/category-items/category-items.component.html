@@ -36,9 +36,6 @@
 
         <div class="flex align-items-center justify-content-between mt-2">
           <p-rating [(ngModel)]="item.rating" [readonly]="true" [stars]="10"></p-rating>
-          <button pButton icon="pi pi-star"
-                  [severity]="'secondary'"
-                  [outlined]="true" (click)="rateItem(item)"></button>
         </div>
       </p-card>
     </ng-container>

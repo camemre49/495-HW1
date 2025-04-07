@@ -90,7 +90,6 @@ export class ItemDetailsComponent implements OnInit {
 
     this.itemService.submitReview(this.itemId, reviewData).subscribe(
       (response) => {
-        alert('Review submitted successfully!');
         this.isReviewSubmitted = true;
         this.fetchItemDetails(); // Fetch updated item details with the review
       },
@@ -121,7 +120,6 @@ export class ItemDetailsComponent implements OnInit {
       // Call the removeItem method with requestedBy
       this.itemService.removeItem(this.itemId, requestedBy).subscribe(
         (response) => {
-          alert('Item removed successfully');
           this.router.navigate([`/home/${this.categoryName}`])
         },
         (error) => {
