@@ -4,7 +4,7 @@
 
 🔗 [https://495-hw-1.vercel.app](https://495-hw-1.vercel.app)
 
-This is a simple e-commerce web application developed for CENG495 Homework 1 and deployed to Vercel. It uses MongoDB Atlas for data storage and supports basic admin and user functionalities. The app includes basic functionalities to meet the minimum requirements of the homework. Some features, such as logout, are intentionally omitted to focus on core functionalities.
+This is a simple e-commerce web application developed for CENG495 Homework 1 and deployed to Vercel. It uses MongoDB Atlas for data storage and supports basic admin and user functionalities. The app includes basic functionalities to meet the minimum requirements of the homework. Some features, such as logout, are intentionally omitted to focus on core functionalities. The app is publicly accessible, so there’s a possibility of corrupted data being added by external users. Please keep this in mind.
 
 ---
 
